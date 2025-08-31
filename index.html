@@ -38,9 +38,39 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--dark-bg);
+            background-color: #fff; /* Fallback background */
             color: var(--text-color);
             line-height: 1.7;
+        }
+
+        /* Full page background slider */
+        #site-bg-slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+        }
+        .bg-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .bg-slide.active { opacity: 1; }
+        #site-bg-slider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: -1;
         }
 
         .container {
@@ -102,14 +132,25 @@
             background-color: var(--primary-color);
             color: #fff;
         }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background-color: transparent;
+            color: #dc3545;
+        }
         
         .section {
             padding: 100px 0;
             overflow-x: hidden;
+            background-color: transparent;
         }
 
         .bg-light {
-            background-color: var(--light-bg);
+            background-color: transparent !important;
         }
 
         .section-title {
@@ -190,7 +231,7 @@
             padding-bottom: 5px;
         }
         
-        .nav-links a:not(.whatsapp-icon)::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -205,20 +246,10 @@
             color: var(--primary-color);
         }
         
-        .nav-links a:not(.whatsapp-icon):hover::after, .nav-links a:not(.whatsapp-icon).active::after {
+        .nav-links a:hover::after, .nav-links a.active::after {
             width: 100%;
         }
-
-        .whatsapp-icon svg {
-            width: 28px;
-            height: 28px;
-            color: #25D366;
-            transition: transform 0.3s ease;
-        }
-        .whatsapp-icon:hover svg {
-            transform: scale(1.15);
-        }
-
+        
         #mobile-menu-toggle {
             display: none;
             background: none;
@@ -236,72 +267,41 @@
             color: #fff;
             padding-top: 120px;
             padding-bottom: 40px;
+            background: none; /* remove direct background */
         }
         
-        #hero-bg-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-
-        .hero-bg-slide {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-        
-        .hero-bg-slide.active {
-            opacity: 1;
-        }
-
-        #home::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: -1;
-        }
-
         .hero-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            align-items: center;
-            gap: 50px;
+            grid-template-columns: 1fr;
+            text-align: center;
             position: relative;
             z-index: 1;
         }
 
         .hero-content {
-            text-align: left;
-            max-width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 15px;
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             line-height: 1.2;
             margin-bottom: 1.5rem;
         }
 
         .hero-content p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #f0f0f0;
             margin-bottom: 2.5rem;
         }
         
         .hero-video-wrapper {
             width: 100%;
+            max-width: 600px;
+            margin: 2rem auto 0;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -312,7 +312,15 @@
             width: 100%;
             display: block;
         }
-
+        
+        /* General content wrapper for sections */
+        .content-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        }
+        
         /* --- General Form Styles --- */
         .form-group {
             margin-bottom: 15px;
@@ -342,16 +350,16 @@
         }
         
         /* --- About Section --- */
-        .about-content {
+        #about .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             align-items: center;
         }
-        .about-image { border-radius: 8px; overflow: hidden; }
-        .about-image img { width: 100%; display: block; }
-        .about-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; }
+        #about .about-image { border-radius: 8px; overflow: hidden; }
+        #about .about-image img { width: 100%; display: block; }
+        #about .about-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
+        #about .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; }
 
         /* --- Services Section --- */
         .services-grid-new {
@@ -398,150 +406,83 @@
             font-size: 0.8rem;
             align-self: center;
         }
-
-        /* --- Why Choose Us Section --- */
-        #features-grid {
+        
+        /* --- Projects Section --- */
+        #projects-grid {
             display: grid;
-            grid-template-columns: 1fr 2.5fr;
-            gap: 30px;
-            align-items: flex-start;
-        }
-        .features-main-card {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 40px;
-            border-radius: 15px;
-            height: 100%;
-        }
-        .features-main-card i {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-        }
-        .features-main-card h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        .features-main-card p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .features-sub-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
-        .feature-card {
-            background-color: #fff;
-            padding: 30px;
+        .project-card {
+            overflow: hidden;
             border-radius: 15px;
+            position: relative;
             box-shadow: 0 5px 25px rgba(0,0,0,0.07);
-            text-align: center;
-        }
-        .feature-card i {
-            width: 36px;
-            height: 36px;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        .feature-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-        .feature-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* --- Site Choice Section --- */
-        #sites-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            align-items: center;
-            height: 450px;
-        }
-        #sites-grid a {
-            display: block;
-            height: 100%;
-        }
-        .site-choice-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        #sites-grid:hover .site-choice-item {
-            transform: scale(0.95);
-            opacity: 0.7;
-        }
-        #sites-grid a:hover .site-choice-item {
-            transform: scale(1.05);
-            opacity: 1;
-            z-index: 10;
-        }
-        .site-choice-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .site-choice-item .overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 40px 20px 20px;
-            text-align: center;
-            color: #fff;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-        }
-         .site-choice-item .overlay h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-         }
-
-        /* --- Gallery & Video Section --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            position: relative;
             cursor: pointer;
         }
-        .gallery-item img, .gallery-item video {
+        .project-card img {
             width: 100%;
-            height: 250px;
+            height: 300px;
             object-fit: cover;
             display: block;
             transition: transform 0.4s ease;
         }
-        .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.1); }
-        .gallery-item .overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
+        .project-card:hover img {
+            transform: scale(1.1);
         }
-        .gallery-item:hover .overlay { opacity: 1; }
+        .project-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 25px 25px;
+            color: #fff;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+        }
+        .project-card h4 {
+            font-size: 1.8rem;
+        }
+        .project-card span {
+            font-family: var(--font-body);
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* --- Video Tours Section --- */
+        #videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .video-item {
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+        }
+        .video-item video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        .video-item .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allow hover to pass through to video */
+        }
+        .video-item:hover .overlay {
+             opacity: 0;
+        }
 
         /* --- Rating / Testimonials Section --- */
         .rating-container {
-            max-width: 800px; margin: 0 auto; background: var(--light-bg);
-            padding: 40px; border-radius: 8px; text-align: center;
-            border: 1px solid var(--border-color);
+             background: var(--light-bg);
         }
-        .stars { font-size: 2.5rem; color: #ccc; cursor: pointer; margin-bottom: 1rem; }
-        .stars .star:hover, .stars .star.selected { color: var(--primary-color); }
         
-        /* --- Reviews Display Section --- */
         #reviews-display-container {
             max-width: 1100px;
             margin-left: auto;
@@ -561,17 +502,13 @@
             border-radius: 15px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.07);
             border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
         }
-
         .review-card-header {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 15px;
         }
-
         .reviewer-initial {
             width: 45px;
             height: 45px;
@@ -584,47 +521,35 @@
             font-size: 1.5rem;
             font-weight: 500;
         }
-
-        .reviewer-info {
-            flex-grow: 1;
-        }
-
+        .reviewer-info { flex-grow: 1; }
         .reviewer-name {
             display: block;
             font-weight: 600;
             color: var(--text-color);
         }
-
         .review-date {
             display: block;
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-
         .review-card-google-logo {
             width: 24px;
             height: 24px;
         }
-        
-        .review-card-body {
-             text-align: left;
-        }
-
+        .review-card-body { text-align: left; }
         .review-card-stars {
-            color: #fbbc05; /* Google's yellow for stars */
+            color: #fbbc05;
             font-size: 1.2rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .verified-icon {
             width: 18px;
             height: 18px;
-            color: #1a73e8; /* Google's blue */
+            color: #1a73e8;
         }
-
         .review-card-comment {
             color: var(--text-color);
             font-size: 0.95rem;
@@ -639,21 +564,13 @@
             gap: 50px; align-items: flex-start;
         }
         .query-form {
-            background: var(--light-bg); padding: 40px; border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        .query-form h3 { font-size: 2rem; margin-bottom: 2rem; text-align: center; }
-        .query-form-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 15px;
+             background: var(--light-bg);
         }
         
         #contact-info-card {
-             background: var(--light-bg); padding: 40px; border-radius: 8px;
-            border: 1px solid var(--border-color);
+             background: var(--light-bg);
         }
+        
         #contact-info-card h3 { font-size: 2rem; margin-bottom: 2rem; }
         .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .contact-item i { width: 24px; height: 24px; color: var(--primary-color); }
@@ -665,7 +582,7 @@
             border-top: 1px solid var(--border-color);
             font-size: 0.9rem; 
             color: var(--text-muted); 
-            background: var(--light-bg);
+            background: rgba(255,255,255,0.9);
         }
         .footer-container {
             display: flex;
@@ -684,72 +601,38 @@
         }
 
         /* --- Admin Panel & Login --- */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         #login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
         }
         
         .login-box {
-            background: #fff;
-            padding: 40px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
+            background: #fff; padding: 40px; border-radius: 15px;
+            width: 100%; max-width: 400px; text-align: center; position: relative;
         }
-        .login-box h3 {
-            margin-bottom: 1rem;
-        }
+        .login-box h3 { margin-bottom: 1rem; }
         #login-timer {
             margin-bottom: 1rem;
             color: var(--text-muted);
         }
-        #login-error {
-            color: #dc3545;
-            margin-top: 10px;
-            height: 1em;
-        }
+        #login-error { color: #dc3545; margin-top: 10px; height: 1em; }
         .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            cursor: pointer;
-            color: var(--text-muted);
+            position: absolute; top: 15px; right: 15px;
+            cursor: pointer; color: var(--text-muted);
         }
 
-        #admin-panel {
-            padding: 40px 0;
-        }
+        #admin-panel { padding: 40px 0; }
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;
         }
         .admin-section {
-            background: var(--light-bg);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
+            background: var(--light-bg); padding: 30px; border-radius: 15px; margin-bottom: 30px;
         }
-        .admin-section h3 {
-            margin-bottom: 20px;
-        }
+        .admin-section h3 { margin-bottom: 20px; }
         
         /* --- Responsive Styles --- */
         @media (max-width: 992px) {
@@ -761,27 +644,26 @@
             }
             .nav-links.active { left: 0; }
             #mobile-menu-toggle { display: block; z-index: 1001; }
-            .about-content, .form-and-contact-grid, .hero-grid, #features-grid { grid-template-columns: 1fr; }
-            .hero-content { text-align: center; margin-bottom: 30px; }
-            #sites-grid { grid-template-columns: 1fr; height: auto; }
-            .site-choice-item { height: 250px; }
-            #sites-grid a:hover .site-choice-item { transform: scale(1); opacity: 1; }
+            #about .about-content, .form-and-contact-grid, .hero-grid { grid-template-columns: 1fr; }
+            .hero-content { text-align: center; }
         }
         
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.8rem; }
             .section-title { font-size: 2.2rem; }
-            .query-form-buttons { flex-direction: column; align-items: stretch; }
             .footer-container {
                 flex-direction: column;
                 text-align: center;
             }
-            .features-sub-cards, .services-grid-new { grid-template-columns: 1fr; }
+            .services-grid-new, #projects-grid { grid-template-columns: 1fr; }
         }
 
     </style>
 </head>
 <body>
+
+    <div id="site-bg-slider"></div>
+
     <div id="main-content">
         <!-- Header and Navigation Bar -->
         <header id="header">
@@ -792,16 +674,8 @@
                         <li><a href="#home" class="nav-link active">Home</a></li>
                         <li><a href="#about" class="nav-link">About</a></li>
                         <li><a href="#services" class="nav-link">Services</a></li>
-                        <li><a href="#features" class="nav-link">Features</a></li>
-                        <li><a href="#sites" class="nav-link">Sites</a></li>
-                        <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                        <li><a href="#videos" class="nav-link">Videos</a></li>
-                        <li><a href="#contact" class="nav-link">Contact</a></li>
-                        <li>
-                            <a href="https://wa.me/971557545105" target="_blank" class="whatsapp-icon" title="Contact us on WhatsApp">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 439.6c-33.8 0-66.3-13.1-90.4-37.5L93 381.2l-25.3 6.6L43.8 410l-6.6-25.3-20.5-60.6c-15.8-34.3-24.3-72.7-24.3-111.9 0-101.9 83.2-185.1 185.1-185.1 49.9 0 96.9 19.5 130.8 53.4 33.9 33.9 53.4 80.9 53.4 130.8 0 101.9-83.2 185.1-185.1 185.1zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-                            </a>
-                        </li>
+                        <li><a href="#projects" class="nav-link">Our Projects</a></li>
+                        <li><a href="#contact" class="nav-link">Contact Us</a></li>
                     </ul>
                     <button id="mobile-menu-toggle">
                         <i data-feather="menu"></i>
@@ -813,19 +687,18 @@
         <main>
             <!-- Home / Hero Section -->
             <section id="home" class="section">
-                <div id="hero-bg-slider"></div>
                 <div class="container">
                     <div class="hero-grid">
                         <div class="hero-content animate-on-scroll">
                             <h1 data-editable="hero-title">Upgrade Your Kitchen with Dream Cabinets</h1>
                             <p data-editable="hero-subtitle">Emphasizes quality, transparency, customer focus, efficiency, and timely, budget-friendly design and installation of kitchen cabinets, aligning with their core business values.</p>
-                            <a href="https://wa.me/971557545105" target="_blank" class="btn btn-primary"><i data-feather="message-circle"></i>WhatsApp</a>
-                        </div>
-                        <div class="hero-video-wrapper animate-on-scroll">
-                            <video controls poster="https://placehold.co/1280x720/1a1a1a/c59d5f?text=Trust+Creative+Showcase">
-                                <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-shot-of-a-luxurious-house-42385-large.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <a href="#contact" class="btn btn-primary">Get a Free Consultation</a>
+                             <div class="hero-video-wrapper">
+                                <video controls>
+                                    <source type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -833,25 +706,16 @@
 
             <!-- About Section -->
             <section id="about" class="section">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll">About Trust Creative</h2>
-                    <p class="section-subtitle animate-on-scroll">We are a passionate team of designers dedicated to creating beautiful and functional spaces that you'll love for years to come.</p>
-                    <div class="about-content animate-on-scroll">
-                        <div class="about-image">
-                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=2057&auto=format&fit=crop" alt="Comfortable and stylish bedroom">
-                        </div>
-                        <div class="about-text">
-                            <h3>Our Design Philosophy</h3>
-                            <p>Our approach is centered around you. We take the time to understand your vision, lifestyle, and needs to create a truly personalized design. We blend aesthetics with practicality, ensuring every detail serves a purpose.</p>
-                            <p>From initial concept to final installation, we manage every aspect of the project with meticulous attention to detail, ensuring a seamless and enjoyable experience for our clients.</p>
-                        </div>
+                <div class="container content-wrapper">
+                     <div class="about-content animate-on-scroll">
+                        <!-- About content will be populated by JS -->
                     </div>
                 </div>
             </section>
 
             <!-- Our Services Section -->
-            <section id="services" class="section bg-light">
-                <div class="container">
+            <section id="services" class="section">
+                <div class="container content-wrapper">
                     <h2 class="section-title animate-on-scroll">Our Services</h2>
                     <p class="section-subtitle animate-on-scroll">We offer a comprehensive range of services to transform your space from concept to completion.</p>
                     <div class="services-grid-new animate-on-scroll">
@@ -859,46 +723,24 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Why Choose Us Section -->
-            <section id="features" class="section">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll">Why Choose Us?</h2>
-                    <p class="section-subtitle animate-on-scroll">We combine artistry with craftsmanship to deliver unparalleled quality in every project.</p>
-                    <div id="features-grid" class="animate-on-scroll">
-                        <!-- Features will be populated by JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Site Choice Section -->
-            <section id="sites" class="section bg-light">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll">Choose Your Site</h2>
-                    <p class="section-subtitle animate-on-scroll">Explore our expertise across different types of properties. Hover over an image to see it in detail.</p>
-                    <div id="sites-grid" class="animate-on-scroll">
-                        <!-- Sites will be populated by JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Gallery Section -->
-            <section id="gallery" class="section">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll">Our Gallery</h2>
+            
+            <!-- Our Projects Section -->
+            <section id="projects" class="section">
+                <div class="container content-wrapper">
+                    <h2 class="section-title animate-on-scroll">Our Projects</h2>
                     <p class="section-subtitle animate-on-scroll">A glimpse into some of the stunning spaces we've had the pleasure of creating.</p>
-                    <div class="gallery-grid animate-on-scroll" id="gallery-grid">
-                        <!-- Gallery will be populated by JS -->
+                    <div id="projects-grid" class="animate-on-scroll">
+                        <!-- Projects will be populated by JS -->
                     </div>
                 </div>
             </section>
-
-            <!-- Videos Section -->
-            <section id="videos" class="section bg-light">
-                <div class="container">
+            
+            <!-- Video Tours Section -->
+            <section id="videos" class="section">
+                 <div class="container content-wrapper">
                     <h2 class="section-title animate-on-scroll">Video Tours</h2>
                     <p class="section-subtitle animate-on-scroll">Step inside our completed projects and experience the design in motion.</p>
-                    <div class="gallery-grid animate-on-scroll" id="videos-grid">
+                    <div id="videos-grid" class="animate-on-scroll">
                         <!-- Videos will be populated by JS -->
                     </div>
                 </div>
@@ -906,7 +748,7 @@
 
             <!-- Contact & Rating Section -->
             <section id="contact" class="section">
-                <div class="container">
+                <div class="container content-wrapper">
                     <h2 class="section-title animate-on-scroll">Get In Touch</h2>
                     <p class="section-subtitle animate-on-scroll">Have a project in mind or a question for us? We'd love to hear from you.</p>
 
@@ -972,7 +814,7 @@
                 <p>&copy; 2024 Trust Creative. All Rights Reserved.</p>
                 <div>
                     <span class="admin-login-link" id="admin-login-link">Admin Login</span>
-                    <p>Created by Shivam Sharma | <a href="tel:+918529434514">+91 85294 34514</a></p>
+                    <p>Created by Shivam Sharma</p>
                 </div>
             </div>
         </footer>
@@ -983,7 +825,7 @@
         <div class="login-box">
             <span class="close-modal" id="close-login-modal">&times;</span>
             <h3>Admin Login</h3>
-            <p id="login-timer">Time remaining: 30s</p>
+            <p id="login-timer"></p>
             <form id="login-form">
                 <div class="form-group">
                     <input type="password" id="admin-password" placeholder="Password" required>
@@ -1002,38 +844,69 @@
                 <button id="logout-btn" class="btn btn-secondary">Logout</button>
             </div>
 
+            <!-- Change Password Management -->
+            <div class="admin-section">
+                <h3>Change Admin Password</h3>
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" id="admin-current-password">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="admin-new-password">
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" id="admin-confirm-password">
+                </div>
+                <button id="change-password-btn" class="btn btn-primary">Change Password</button>
+                <p id="password-change-status" style="margin-top: 10px; height: 1em;"></p>
+            </div>
+
             <!-- Hero Section Management -->
             <div class="admin-section">
                 <h3>Hero Section</h3>
                 <div class="form-group">
-                    <label for="admin-hero-title">Main Title</label>
+                    <label>Main Title</label>
                     <input type="text" id="admin-hero-title">
                 </div>
                 <div class="form-group">
-                    <label for="admin-hero-subtitle">Subtitle</label>
+                    <label>Subtitle</label>
                     <textarea id="admin-hero-subtitle" rows="3"></textarea>
+                </div>
+                 <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
+                    <label>Video Poster Image URL</label>
+                    <input type="text" id="admin-hero-video-poster">
+                </div>
+                <div class="form-group">
+                    <label>Video Source URL (.mp4)</label>
+                    <input type="text" id="admin-hero-video-src">
                 </div>
                 <button class="btn btn-primary" data-save="hero">Save Hero Content</button>
             </div>
-
-            <!-- Why Choose Us Management -->
-            <div class="admin-section">
-                <h3>Why Choose Us Section</h3>
-                <div id="admin-features-list">
-                    <!-- Features edit forms will be here -->
-                </div>
-                <button class="btn btn-primary" data-save="features">Save Why Choose Us</button>
-            </div>
-
-            <!-- Choose Your Site Management -->
-            <div class="admin-section">
-                <h3>Choose Your Site Section</h3>
-                <div id="admin-sites-list">
-                    <!-- Sites edit forms will be here -->
-                </div>
-                <button class="btn btn-primary" data-save="sites">Save Sites</button>
-            </div>
             
+            <!-- About Section Management -->
+            <div class="admin-section">
+                <h3>About Section</h3>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="text" id="admin-about-image">
+                </div>
+                 <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="admin-about-title">
+                </div>
+                <div class="form-group">
+                    <label>Paragraph 1</label>
+                    <textarea id="admin-about-p1" rows="3"></textarea>
+                </div>
+                 <div class="form-group">
+                    <label>Paragraph 2</label>
+                    <textarea id="admin-about-p2" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary" data-save="about">Save About Content</button>
+            </div>
+
             <!-- Services Management -->
             <div class="admin-section">
                 <h3>Services</h3>
@@ -1042,23 +915,24 @@
                 </div>
                 <button class="btn btn-primary" data-save="services">Save Services</button>
             </div>
-
-             <!-- Gallery Management -->
+            
+            <!-- Projects Management -->
             <div class="admin-section">
-                <h3>Gallery</h3>
-                <div id="admin-gallery-list">
-                    <!-- Gallery edit forms will be here -->
+                <h3>Our Projects</h3>
+                <div id="admin-projects-list">
+                    <!-- Projects edit forms will be here -->
                 </div>
-                <button class="btn btn-primary" data-save="gallery">Save Gallery</button>
+                <button id="add-project-btn" class="btn btn-secondary" style="margin-top: 20px;">Add New Project</button>
+                <button class="btn btn-primary" data-save="projects">Save Projects</button>
             </div>
-
-            <!-- Videos Management -->
+            
+             <!-- Video Tours Management -->
             <div class="admin-section">
                 <h3>Video Tours</h3>
                 <div id="admin-videos-list">
                     <!-- Video edit forms will be here -->
                 </div>
-                <button class="btn btn-primary" data-save="videos">Save Videos</button>
+                <button class="btn btn-primary" data-save="videos">Save Video Tours</button>
             </div>
 
             <!-- Contact Details Management -->
@@ -1082,709 +956,766 @@
     </div>
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // --- GLOBAL STATE & DEFAULTS ---
-        let websiteData;
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, deleteDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        const defaultContentData = {
-            hero: {
-                title: "Upgrade Your Kitchen with Dream Cabinets",
-                subtitle: "Emphasizes quality, transparency, customer focus, efficiency, and timely, budget-friendly design and installation of kitchen cabinets, aligning with their core business values."
-            },
-            services: [
-                {
-                    image: "https://images.unsplash.com/photo-1588796143956-192a54b2d355?q=80&w=1974&auto=format&fit=crop",
-                    title: "Ceiling & Partitions",
-                    description: "Expert installation of false ceilings and light partitions to redefine your space with modern aesthetics."
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- GLOBAL STATE & DEFAULTS ---
+            let websiteData;
+            let db, auth;
+            let contentDocRef, reviewsCollectionRef;
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+            const defaultContentData = {
+                password: "admin123",
+                hero: {
+                    title: "Upgrade Your Kitchen with Dream Cabinets",
+                    subtitle: "Emphasizes quality, transparency, customer focus, efficiency, and timely, budget-friendly design and installation of kitchen cabinets, aligning with their core business values.",
+                    videoPoster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Trust+Creative+Showcase",
+                    videoSrc: "https://assets.mixkit.co/videos/preview/mixkit-beautiful-shot-of-a-luxurious-house-42385-large.mp4"
                 },
-                {
-                    image: "https://images.unsplash.com/photo-1494448524339-b1348b3b4f6e?q=80&w=2070&auto=format&fit=crop",
-                    title: "Carpentry & Flooring",
-                    description: "Custom carpentry and high-quality wood & SPC flooring that add warmth and elegance to any room."
+                about: {
+                    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=2057&auto=format&fit=crop",
+                    title: "Our Design Philosophy",
+                    p1: "Our approach is centered around you. We take the time to understand your vision, lifestyle, and needs to create a truly personalized design. We blend aesthetics with practicality, ensuring every detail serves a purpose.",
+                    p2: "From initial concept to final installation, we manage every aspect of the project with meticulous attention to detail, ensuring a seamless and enjoyable experience for our clients."
                 },
-                {
-                    image: "https://images.unsplash.com/photo-1594100589299-dec128522739?q=80&w=1974&auto=format&fit=crop",
-                    title: "Walls, Tiling & Wallpaper",
-                    description: "Precision floor and wall tiling, alongside professional wallpaper fixing to create stunning interiors."
-                },
-                {
-                    image: "https://images.unsplash.com/photo-1517449557769-6b54a8551975?q=80&w=2070&auto=format&fit=crop",
-                    title: "Electrical & Lighting",
-                    description: "Complete electrical works, ensuring safe, efficient, and beautifully integrated lighting solutions."
+                services: [
+                    { image: "https://images.unsplash.com/photo-1588796143956-192a54b2d355?q=80&w=1974&auto=format&fit=crop", title: "Ceiling & Partitions", description: "Expert installation of false ceilings and light partitions to redefine your space with modern aesthetics." },
+                    { image: "https://images.unsplash.com/photo-1494448524339-b1348b3b4f6e?q=80&w=2070&auto=format&fit=crop", title: "Carpentry & Flooring", description: "Custom carpentry and high-quality wood & SPC flooring that add warmth and elegance to any room." },
+                    { image: "https://images.unsplash.com/photo-1594100589299-dec128522739?q=80&w=1974&auto=format&fit=crop", title: "Walls, Tiling & Wallpaper", description: "Precision floor and wall tiling, alongside professional wallpaper fixing to create stunning interiors." },
+                    { image: "https://images.unsplash.com/photo-1517449557769-6b54a8551975?q=80&w=2070&auto=format&fit=crop", title: "Electrical & Lighting", description: "Complete electrical works, ensuring safe, efficient, and beautifully integrated lighting solutions." }
+                ],
+                projects: [
+                    { image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2072&auto=format&fit=crop", title: "Modern Villa", category: "Residential" },
+                    { image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop", title: "Downtown Office", category: "Commercial" },
+                    { image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop", title: "Luxury Apartment", category: "Residential" },
+                    { image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2070&auto=format&fit=crop", title: "Boutique Hotel", category: "Hospitality" },
+                    { image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=2070&auto=format&fit=crop", title: "Retail Space", category: "Commercial" },
+                    { image: "https://images.unsplash.com/photo-1567016432779-1fee74f88b56?q=80&w=1974&auto=format&fit=crop", title: "Cozy Cafe", category: "Hospitality" }
+                ],
+                videos: [
+                    { poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Modern+Kitchen", src: "https://assets.mixkit.co/videos/preview/mixkit-modern-kitchen-with-a-bar-counter-42392-large.mp4" },
+                    { poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Luxury+Living+Room", src: "https://assets.mixkit.co/videos/preview/mixkit-stylish-living-room-with-a-big-white-couch-42401-large.mp4" },
+                    { poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Cozy+Bedroom", src: "https://assets.mixkit.co/videos/preview/mixkit-cozy-bedroom-in-a-modern-house-42410-large.mp4" },
+                    { poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Minimalist+Office", src: "https://assets.mixkit.co/videos/preview/mixkit-a-minimalist-home-office-4247-large.mp4" }
+                ],
+                contact: {
+                    phone1: "+971 55 754 5105",
+                    phone2: "+971 56 945 9021",
+                    email: "trustcreativedecor@gmail.com",
+                    address: "123 Design Street, Dubai, UAE"
                 }
-            ],
-            videos: [
-                {
-                    poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Modern+Kitchen",
-                    src: "https://assets.mixkit.co/videos/preview/mixkit-modern-kitchen-with-a-bar-counter-42392-large.mp4"
-                },
-                {
-                    poster: "https://placehold.co/1280x720/1a1a1a/c59d5f?text=Luxury+Living+Room",
-                    src: "https://assets.mixkit.co/videos/preview/mixkit-stylish-living-room-with-a-big-white-couch-42401-large.mp4"
-                }
-            ],
-            features: {
-                main: {
-                    icon: "home",
-                    title: "The Best Kitchen Cabinet Company in Dubai",
-                    text: "We Manage Your Kitchen Cabinet Design, Customization, And Installation Projects With Our Skilled Planners Equipped With A Comprehensive Scope Of Work."
-                },
-                sub: [
-                    { icon: "box", title: "Custom Kitchen Cabinetry", text: "We embody excellence in kitchen cabinet solutions, ensuring each project surpasses expectations." },
-                    { icon: "pen-tool", title: "Design and Craftsmanship", text: "We weave your personal style with our expert craftsmanship to create kitchen cabinets that combine beauty and durability." },
-                    { icon: "settings", title: "Tailored Cabinet Solutions", text: "Transform your kitchen into a masterpiece with custom-designed cabinets that reflect your unique taste." }
-                ]
-            },
-            sites: [
-                { image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?q=80&w=2070&auto=format&fit=crop", title: "Kitchen" },
-                { image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop", title: "Apartment" },
-                { image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1980&auto=format&fit=crop", title: "Office" }
-            ],
-            gallery: [
-                 { image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2072&auto=format&fit=crop", title: "Living Room" },
-                 { image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop", title: "Modern Home" },
-                 { image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop", title: "Minimalist Chair" },
-                 { image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2070&auto=format&fit=crop", title: "Cozy Bedroom" },
-                 { image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=2070&auto=format&fit=crop", title: "Office Space" },
-                 { image: "https://images.unsplash.com/photo-1567016432779-1fee74f88b56?q=80&w=1974&auto=format&fit=crop", title: "Dining Area" }
-            ],
-            contact: {
-                phone1: "+971 55 754 5105",
-                phone2: "+971 56 945 9021",
-                email: "trustcreativedecor@gmail.com",
-                address: "123 Design Street, Dubai, UAE"
-            }
-        };
-        
-        // --- ROBUST DATA INITIALIZATION ---
-        function initializeData() {
-            try {
-                const storedData = localStorage.getItem('websiteContent');
-                if (storedData) {
-                    websiteData = JSON.parse(storedData);
-                    // Basic validation to ensure all keys exist
-                    const defaultKeys = Object.keys(defaultContentData);
-                    const loadedKeys = Object.keys(websiteData);
-                    if (defaultKeys.some(key => !loadedKeys.includes(key))) {
-                         throw new Error("Stored data is missing sections.");
+            };
+            
+            // --- FIREBASE SETUP ---
+            async function initializeFirebase() {
+                try {
+                    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+                    if (!firebaseConfig.apiKey) {
+                        console.log("Firebase config not found. Running in local mode.");
+                        throw new Error("Firebase config missing");
                     }
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+
+                    contentDocRef = doc(db, 'artifacts', appId, 'public/data/content', 'main');
+                    reviewsCollectionRef = collection(db, 'artifacts', appId, 'public/data/reviews');
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    
+                    setupListeners();
+
+                } catch(e) {
+                    console.error("Firebase initialization failed:", e.message);
+                    websiteData = defaultContentData;
+                    loadContent();
+                    loadReviews([]);
+                }
+            }
+
+            function setupListeners() {
+                onSnapshot(contentDocRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        websiteData = docSnap.data();
+                        // Add any new default properties if they don't exist in the fetched data
+                        if (!websiteData.password) websiteData.password = defaultContentData.password;
+                        if (!websiteData.videos) websiteData.videos = defaultContentData.videos;
+                        if (!websiteData.hero.videoSrc) {
+                            websiteData.hero.videoSrc = defaultContentData.hero.videoSrc;
+                            websiteData.hero.videoPoster = defaultContentData.hero.videoPoster;
+                        }
+
+                    } else {
+                        setDoc(contentDocRef, defaultContentData).then(() => {
+                            websiteData = { ...defaultContentData };
+                        });
+                    }
+                    loadContent();
+                }, (error) => {
+                    console.error("Error listening to content data:", error);
+                    websiteData = defaultContentData;
+                    loadContent();
+                });
+
+                onSnapshot(query(reviewsCollectionRef), (querySnapshot) => {
+                    const reviews = [];
+                    querySnapshot.forEach((doc) => {
+                        reviews.push({ ...doc.data(), id: doc.id });
+                    });
+                    loadReviews(reviews);
+                }, (error) => {
+                    console.error("Error listening to reviews:", error);
+                    loadReviews([]);
+                });
+            }
+
+            initializeFirebase();
+            
+            // --- Feather Icons Initialization ---
+            feather.replace();
+
+            // --- PERSISTENT ADMIN LOGIN CHECK ---
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                showAdminPanel();
+            }
+
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
                 } else {
-                    throw new Error("No stored data found.");
+                    header.classList.remove('scrolled');
                 }
-            } catch (e) {
-                console.warn("Could not retrieve or parse stored data, reverting to defaults.", e);
-                websiteData = JSON.parse(JSON.stringify(defaultContentData)); // Deep copy
-            }
-            localStorage.setItem('websiteContent', JSON.stringify(websiteData));
-        }
-        
-        initializeData();
-        
-        // --- Feather Icons Initialization ---
-        feather.replace();
-
-        // --- RENDER FUNCTIONS ---
-        loadContent();
-        loadReviews();
-
-        // --- PERSISTENT ADMIN LOGIN CHECK ---
-        if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
-            showAdminPanel();
-        }
-
-        // --- Header Scroll Effect ---
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // --- Hero Background Slider ---
-        const heroSlider = document.getElementById('hero-bg-slider');
-        const backgroundImages = [
-            'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=2574&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1567016432779-1fee74f88b56?q=80&w=1974&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1533779283484-a4746d4504c5?q=80&w=2070&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1519947486511-46149fa0a254?q=80&w=1974&auto=format&fit=crop'
-        ];
-        
-        backgroundImages.forEach((imgUrl, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'hero-bg-slide';
-            slide.style.backgroundImage = `url('${imgUrl}')`;
-            if (index === 0) slide.classList.add('active');
-            heroSlider.appendChild(slide);
-        });
-        
-        let currentBgIndex = 0;
-        const slides = document.querySelectorAll('.hero-bg-slide');
-        setInterval(() => {
-            if(document.body.classList.contains('admin-view')) return;
-            slides[currentBgIndex].classList.remove('active');
-            currentBgIndex = (currentBgIndex + 1) % slides.length;
-            slides[currentBgIndex].classList.add('active');
-        }, 5000);
-
-
-        // --- Mobile Menu Toggle ---
-        const menuToggle = document.getElementById('mobile-menu-toggle');
-        const navLinksContainer = document.getElementById('nav-links');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        if (menuToggle && navLinksContainer) {
-            menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navLinksContainer.classList.toggle('active');
-                menuToggle.innerHTML = navLinksContainer.classList.contains('active') 
-                    ? '<i data-feather="x"></i>' 
-                    : '<i data-feather="menu"></i>';
-                feather.replace();
             });
-        }
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                 if(navLinksContainer.classList.contains('active')){
-                    navLinksContainer.classList.remove('active');
-                    menuToggle.innerHTML = '<i data-feather="menu"></i>';
+            
+            // --- Full Page Background Slider ---
+            const siteBgSlider = document.getElementById('site-bg-slider');
+            const backgroundImages = [
+                'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2127&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1556912173-35f35c5ba95a?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1529209436343-96b01140509a?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format&fit=crop'
+            ];
+            
+            backgroundImages.forEach((imgUrl, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'bg-slide';
+                slide.style.backgroundImage = `url('${imgUrl}')`;
+                if (index === 0) slide.classList.add('active');
+                siteBgSlider.appendChild(slide);
+            });
+            
+            let currentBgIndex = 0;
+            const slides = document.querySelectorAll('.bg-slide');
+            setInterval(() => {
+                if(document.body.classList.contains('admin-view')) return;
+                slides[currentBgIndex].classList.remove('active');
+                currentBgIndex = (currentBgIndex + 1) % slides.length;
+                slides[currentBgIndex].classList.add('active');
+            }, 5000);
+
+
+            // --- Mobile Menu Toggle ---
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinksContainer = document.getElementById('nav-links');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            if (menuToggle && navLinksContainer) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinksContainer.classList.toggle('active');
+                    menuToggle.innerHTML = navLinksContainer.classList.contains('active') 
+                        ? '<i data-feather="x"></i>' 
+                        : '<i data-feather="menu"></i>';
                     feather.replace();
-                 }
-            });
-        });
-
-        // --- Active Nav Link on Scroll ---
-        const sections = document.querySelectorAll('section[id]');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // --- Star Rating Logic ---
-        const starsContainer = document.querySelector('.stars');
-        const stars = document.querySelectorAll('.star');
-        if(starsContainer) {
-            starsContainer.addEventListener('click', e => {
-                if (e.target.classList.contains('star')) {
-                    const ratingValue = e.target.dataset.value;
-                    starsContainer.dataset.rating = ratingValue;
-                    updateStars(ratingValue);
-                }
-            });
-        }
-        function updateStars(rating) {
-            stars.forEach(star => {
-                star.classList.toggle('selected', star.dataset.value <= rating);
-            });
-        }
-        
-        // --- Rating Form Submission ---
-        const ratingForm = document.getElementById('rating-form');
-        if (ratingForm) {
-            ratingForm.addEventListener('submit', e => {
-                e.preventDefault();
-                const rating = starsContainer.dataset.rating;
-                const name = document.getElementById('rating-name').value || 'Anonymous';
-                const comment = document.getElementById('rating-comment').value;
-
-                if (rating === "0") {
-                    alert("Please select a star rating.");
-                    return;
-                }
-                
-                const newReview = {
-                    id: Date.now(),
-                    name: name,
-                    rating: parseInt(rating),
-                    comment: comment,
-                    date: new Date().toISOString().split('T')[0]
-                };
-                
-                let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-                reviews.push(newReview);
-                localStorage.setItem('reviews', JSON.stringify(reviews));
-                
-                loadReviews();
-                
-                alert("Thank you for your feedback!");
-
-                ratingForm.reset();
-                updateStars(0);
-                starsContainer.dataset.rating = 0;
-            });
-        }
-        
-        // --- Query Form Submission ---
-        const queryForm = document.getElementById('query-form');
-        if(queryForm){
-            queryForm.addEventListener('submit', e => {
-                e.preventDefault();
-                const name = document.getElementById('query-name').value;
-                const phone = document.getElementById('query-phone').value;
-                const message = document.getElementById('query-message').value;
-
-                const whatsappMessage = `New Query from Website:\n\nName: ${name}\nPhone: ${phone}\n\nMessage:\n${message}`;
-                const whatsappUrl = `https://wa.me/971557545105?text=${encodeURIComponent(whatsappMessage)}`;
-
-                window.open(whatsappUrl, '_blank');
-            });
-        }
-
-
-        // --- Scroll Animation Logic ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        const scrollElements = document.querySelectorAll('.animate-on-scroll');
-        scrollElements.forEach((el) => observer.observe(el));
-        
-        // --- Video Play on Click ---
-        document.getElementById('videos-grid').addEventListener('click', (e) => {
-            const galleryItem = e.target.closest('.gallery-item');
-            if (!galleryItem) return;
-
-            const video = galleryItem.querySelector('video');
-            if (!video) return;
-
-            if(video.paused) {
-                video.play();
-                video.controls = true;
-                galleryItem.querySelector('.overlay').style.opacity = '0';
-            } else {
-                video.pause();
-                video.controls = false;
-                galleryItem.querySelector('.overlay').style.opacity = '1';
+                });
             }
-        });
-
-        // --- Review Display Functions ---
-        function addReviewToPage(review) {
-            const reviewsGrid = document.getElementById('reviews-grid');
-            if (!reviewsGrid) return;
-            reviewsGrid.parentElement.style.display = 'block';
-
-            const card = document.createElement('div');
-            card.className = 'review-card';
-            card.innerHTML = `
-                <div class="review-card-header">
-                    <div class="reviewer-initial">${review.name.charAt(0).toUpperCase()}</div>
-                    <div class="reviewer-info">
-                        <span class="reviewer-name">${review.name}</span>
-                        <span class="review-date">${review.date}</span>
-                    </div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="review-card-google-logo">
-                </div>
-                <div class="review-card-body">
-                    <div class="review-card-stars">
-                        <span>${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span> <i data-feather="check-circle" class="verified-icon"></i>
-                    </div>
-                    <p class="review-card-comment">${review.comment || 'Wonderful service!'}</p>
-                </div>
-            `;
-            reviewsGrid.appendChild(card);
-            feather.replace();
-        }
-
-        function loadReviews() {
-            const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-            const reviewsGrid = document.getElementById('reviews-grid');
-            const container = document.getElementById('reviews-display-container');
-            reviewsGrid.innerHTML = '';
             
-            const publicReviews = reviews.filter(r => r.rating >= 3);
-            
-            if (publicReviews.length === 0) {
-                container.style.display = 'none';
-            } else {
-                container.style.display = 'block';
-                publicReviews.forEach(review => addReviewToPage(review));
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if(navLinksContainer.classList.contains('active')){
+                        navLinksContainer.classList.remove('active');
+                        menuToggle.innerHTML = '<i data-feather="menu"></i>';
+                        feather.replace();
+                    }
+                });
+            });
+
+            // --- Active Nav Link on Scroll ---
+            const sections = document.querySelectorAll('section[id]');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // --- Star Rating Logic ---
+            const starsContainer = document.querySelector('.stars');
+            if(starsContainer) {
+                starsContainer.addEventListener('click', e => {
+                    if (e.target.classList.contains('star')) {
+                        const ratingValue = e.target.dataset.value;
+                        starsContainer.dataset.rating = ratingValue;
+                        updateStarsUI(ratingValue);
+                    }
+                });
             }
-        }
+            function updateStarsUI(rating) {
+                starsContainer.querySelectorAll('.star').forEach(star => {
+                    star.classList.toggle('selected', star.dataset.value <= rating);
+                });
+            }
+            
+            // --- Rating Form Submission ---
+            const ratingForm = document.getElementById('rating-form');
+            if (ratingForm) {
+                ratingForm.addEventListener('submit', async e => {
+                    e.preventDefault();
+                    const rating = starsContainer.dataset.rating;
+                    const name = document.getElementById('rating-name').value || 'Anonymous';
+                    const comment = document.getElementById('rating-comment').value;
 
-        // --- CONTENT MANAGEMENT (from in-memory state) ---
-        function loadContent() {
-            // Hero
-            document.querySelector('[data-editable="hero-title"]').textContent = websiteData.hero.title;
-            document.querySelector('[data-editable="hero-subtitle"]').textContent = websiteData.hero.subtitle;
+                    if (rating === "0") {
+                        alert("Please select a star rating.");
+                        return;
+                    }
+                    
+                    const newReview = {
+                        name: name,
+                        rating: parseInt(rating),
+                        comment: comment,
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    
+                    try {
+                        await addDoc(reviewsCollectionRef, newReview);
+                        alert("Thank you for your feedback!");
+                        ratingForm.reset();
+                        updateStarsUI(0);
+                        starsContainer.dataset.rating = 0;
+                    } catch (error) {
+                        console.error("Error adding review:", error);
+                        alert("Sorry, there was an error submitting your review.");
+                    }
+                });
+            }
+            
+            // --- Query Form Submission ---
+            const queryForm = document.getElementById('query-form');
+            if(queryForm){
+                queryForm.addEventListener('submit', e => {
+                    e.preventDefault();
+                    const name = document.getElementById('query-name').value;
+                    const phone = document.getElementById('query-phone').value;
+                    const message = document.getElementById('query-message').value;
 
-            // Services
-            const servicesContainer = document.querySelector('.services-grid-new');
-            servicesContainer.innerHTML = '';
-            websiteData.services.forEach(service => {
-                servicesContainer.innerHTML += `
-                    <div class="service-card">
-                        <img src="${service.image}" alt="${service.title}">
-                        <div class="service-card-content">
-                            <h4>${service.title}</h4>
-                            <p>${service.description}</p>
-                            <a href="#contact" class="btn btn-secondary">Learn More</a>
+                    const whatsappMessage = `New Query from Website:\n\nName: ${name}\nPhone: ${phone}\n\nMessage:\n${message}`;
+                    const whatsappUrl = `https://wa.me/971557545105?text=${encodeURIComponent(whatsappMessage)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                });
+            }
+
+            // --- Scroll Animation Logic ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const scrollElements = document.querySelectorAll('.animate-on-scroll');
+            scrollElements.forEach((el) => observer.observe(el));
+            
+            // --- Video Tours hover-to-play logic ---
+            document.getElementById('videos-grid').addEventListener('mouseover', e => {
+                const videoItem = e.target.closest('.video-item');
+                if (videoItem) {
+                    const video = videoItem.querySelector('video');
+                    if (video) video.play();
+                }
+            });
+
+             document.getElementById('videos-grid').addEventListener('mouseout', e => {
+                const videoItem = e.target.closest('.video-item');
+                if (videoItem) {
+                    const video = videoItem.querySelector('video');
+                    if (video) video.pause();
+                }
+            });
+
+
+            // --- Review Display Functions ---
+            function addReviewToPage(review) {
+                const reviewsGrid = document.getElementById('reviews-grid');
+                if (!reviewsGrid) return;
+                reviewsGrid.parentElement.style.display = 'block';
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-card-header">
+                        <div class="reviewer-initial">${review.name.charAt(0).toUpperCase()}</div>
+                        <div class="reviewer-info">
+                            <span class="reviewer-name">${review.name}</span>
+                            <span class="review-date">${review.date}</span>
                         </div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="review-card-google-logo">
+                    </div>
+                    <div class="review-card-body">
+                        <div class="review-card-stars">
+                            <span>${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span> <i data-feather="check-circle" class="verified-icon"></i>
+                        </div>
+                        <p class="review-card-comment">${review.comment || 'Wonderful service!'}</p>
+                    </div>
+                `;
+                reviewsGrid.appendChild(card);
+                feather.replace();
+            }
+
+            function loadReviews(reviews = []) {
+                const reviewsGrid = document.getElementById('reviews-grid');
+                const container = document.getElementById('reviews-display-container');
+                reviewsGrid.innerHTML = '';
+                
+                const publicReviews = reviews.filter(r => r.rating >= 3);
+                
+                if (publicReviews.length === 0) {
+                    container.style.display = 'none';
+                } else {
+                    container.style.display = 'block';
+                    publicReviews.forEach(review => addReviewToPage(review));
+                }
+            }
+
+            // --- CONTENT MANAGEMENT (from in-memory state) ---
+            function loadContent() {
+                if (!websiteData) return;
+
+                // Hero
+                document.querySelector('[data-editable="hero-title"]').textContent = websiteData.hero.title;
+                document.querySelector('[data-editable="hero-subtitle"]').textContent = websiteData.hero.subtitle;
+
+                // About
+                const aboutContainer = document.querySelector('#about .about-content');
+                aboutContainer.innerHTML = `
+                    <div class="about-image">
+                        <img src="${websiteData.about.image}" alt="Our design philosophy">
+                    </div>
+                    <div class="about-text">
+                        <h3>${websiteData.about.title}</h3>
+                        <p>${websiteData.about.p1}</p>
+                        <p>${websiteData.about.p2}</p>
                     </div>`;
-            });
-            
-            // Features (Why Choose Us)
-            const featuresContainer = document.getElementById('features-grid');
-            featuresContainer.innerHTML = `
-                <div class="features-main-card">
-                    <i data-feather="${websiteData.features.main.icon}"></i>
-                    <h3>${websiteData.features.main.title}</h3>
-                    <p>${websiteData.features.main.text}</p>
-                </div>
-                <div class="features-sub-cards">
-                    ${websiteData.features.sub.map(card => `
-                        <div class="feature-card">
-                             <i data-feather="${card.icon}"></i>
-                            <h4>${card.title}</h4>
-                            <p>${card.text}</p>
-                        </div>
-                    `).join('')}
-                </div>`;
 
-            // Sites
-            const sitesContainer = document.getElementById('sites-grid');
-            sitesContainer.innerHTML = '';
-            sitesContainer.className = 'site-choice-grid';
-            websiteData.sites.forEach(site => {
-                sitesContainer.innerHTML += `
-                     <a href="https://wa.me/971557545105?text=Hello!%20I'm%20interested%20in%20your%20${site.title}%20design%20services." target="_blank">
-                        <div class="site-choice-item">
-                            <img src="${site.image}" alt="${site.title} Design">
-                            <div class="overlay">
-                                <h3>${site.title}</h3>
+                // Services
+                const servicesContainer = document.querySelector('.services-grid-new');
+                servicesContainer.innerHTML = '';
+                websiteData.services.forEach(service => {
+                    servicesContainer.innerHTML += `
+                        <div class="service-card">
+                            <img src="${service.image}" alt="${service.title}">
+                            <div class="service-card-content">
+                                <h4>${service.title}</h4>
+                                <p>${service.description}</p>
+                                <a href="#contact" class="btn btn-secondary">Learn More</a>
                             </div>
-                        </div>
-                    </a>`;
-            });
+                        </div>`;
+                });
+                
+                // Projects
+                const projectsContainer = document.getElementById('projects-grid');
+                projectsContainer.innerHTML = '';
+                websiteData.projects.forEach(project => {
+                    projectsContainer.innerHTML += `
+                        <div class="project-card">
+                            <img src="${project.image}" alt="${project.title}">
+                            <div class="overlay">
+                                <h4>${project.title}</h4>
+                                <span>${project.category}</span>
+                            </div>
+                        </div>`;
+                });
+                
+                // Video Tours
+                const videosContainer = document.getElementById('videos-grid');
+                videosContainer.innerHTML = '';
+                websiteData.videos.forEach(video => {
+                    videosContainer.innerHTML += `
+                        <div class="video-item">
+                            <video muted loop playsinline poster="${video.poster}">
+                                <source src="${video.src}" type="video/mp4">
+                            </video>
+                            <div class="overlay"><i data-feather="play-circle" style="width: 48px; height: 48px;"></i></div>
+                        </div>`;
+                });
 
-            // Gallery
-            const galleryContainer = document.getElementById('gallery-grid');
-            galleryContainer.innerHTML = '';
-            websiteData.gallery.forEach(item => {
-                 galleryContainer.innerHTML += `
-                    <div class="gallery-item">
-                        <img src="${item.image}" alt="${item.title}"><div class="overlay">${item.title}</div>
+                // Contact
+                const contactContainer = document.getElementById('contact-info-card');
+                contactContainer.innerHTML = `
+                    <h3>Contact Details</h3>
+                    <div class="contact-item">
+                        <i data-feather="phone"></i>
+                        <a href="tel:${websiteData.contact.phone1}">${websiteData.contact.phone1}</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-feather="phone"></i>
+                        <a href="tel:${websiteData.contact.phone2}">${websiteData.contact.phone2}</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-feather="mail"></i>
+                        <a href="mailto:${websiteData.contact.email}">${websiteData.contact.email}</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-feather="map-pin"></i>
+                        <span>${websiteData.contact.address}</span>
                     </div>`;
-            });
 
 
-            // Videos
-            const videosContainer = document.getElementById('videos-grid');
-            videosContainer.innerHTML = '';
-            websiteData.videos.forEach(video => {
-                videosContainer.innerHTML += `
-                    <div class="gallery-item">
-                        <video poster="${video.poster}">
-                            <source src="${video.src}" type="video/mp4">
-                        </video>
-                        <div class="overlay"><i data-feather="play-circle" style="width: 48px; height: 48px;"></i></div>
-                    </div>`;
-            });
-
-             // Contact
-            const contactContainer = document.getElementById('contact-info-card');
-            contactContainer.innerHTML = `
-                <h3>Contact Details</h3>
-                <div class="contact-item">
-                    <i data-feather="phone"></i>
-                    <a href="tel:${websiteData.contact.phone1}">${websiteData.contact.phone1}</a>
-                </div>
-                <div class="contact-item">
-                    <i data-feather="phone"></i>
-                    <a href="tel:${websiteData.contact.phone2}">${websiteData.contact.phone2}</a>
-                </div>
-                <div class="contact-item">
-                    <i data-feather="mail"></i>
-                    <a href="mailto:${websiteData.contact.email}">${websiteData.contact.email}</a>
-                </div>
-                <div class="contact-item">
-                    <i data-feather="map-pin"></i>
-                    <span>${websiteData.contact.address}</span>
-                </div>`;
-
-
-            feather.replace();
-        }
-        
-        // --- ADMIN PANEL LOGIC ---
-        const adminLoginLink = document.getElementById('admin-login-link');
-        const loginModal = document.getElementById('login-modal');
-        const closeLoginModal = document.getElementById('close-login-modal');
-        const loginForm = document.getElementById('login-form');
-        const adminPanel = document.getElementById('admin-panel');
-        const mainContent = document.getElementById('main-content');
-        const logoutBtn = document.getElementById('logout-btn');
-        const timerEl = document.getElementById('login-timer');
-        let loginTimer;
-        let countdown;
-        
-        function showAdminPanel() {
-            document.body.classList.add('admin-view');
-            mainContent.classList.add('hidden');
-            adminPanel.classList.remove('hidden');
-            populateAdminPanel();
-        }
-
-        adminLoginLink.addEventListener('click', () => {
-            loginModal.classList.remove('hidden');
-            let timeLeft = 30;
-            timerEl.textContent = `Time remaining: ${timeLeft}s`;
+                feather.replace();
+            }
             
-            countdown = setInterval(() => {
-                timeLeft--;
+            // --- ADMIN PANEL LOGIC ---
+            const adminLoginLink = document.getElementById('admin-login-link');
+            const loginModal = document.getElementById('login-modal');
+            const closeLoginModal = document.getElementById('close-login-modal');
+            const loginForm = document.getElementById('login-form');
+            const adminPanel = document.getElementById('admin-panel');
+            const mainContent = document.getElementById('main-content');
+            const logoutBtn = document.getElementById('logout-btn');
+            const timerEl = document.getElementById('login-timer');
+            let loginTimer;
+            let countdown;
+
+            function showAdminPanel() {
+                document.body.classList.add('admin-view');
+                mainContent.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                populateAdminPanel();
+            }
+
+            adminLoginLink.addEventListener('click', () => {
+                loginModal.classList.remove('hidden');
+                let timeLeft = 30;
                 timerEl.textContent = `Time remaining: ${timeLeft}s`;
-            }, 1000);
+                
+                countdown = setInterval(() => {
+                    timeLeft--;
+                    timerEl.textContent = `Time remaining: ${timeLeft}s`;
+                }, 1000);
 
-            loginTimer = setTimeout(() => {
-                clearInterval(countdown);
-                loginModal.classList.add('hidden');
-            }, 30000);
-        });
-        
-        closeLoginModal.addEventListener('click', () => {
-            clearTimeout(loginTimer);
-            clearInterval(countdown);
-            loginModal.classList.add('hidden');
-        });
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const password = document.getElementById('admin-password').value;
-            const errorEl = document.getElementById('login-error');
+                loginTimer = setTimeout(() => {
+                    clearInterval(countdown);
+                    loginModal.classList.add('hidden');
+                    // Re-enable the link if the timer runs out
+                    adminLoginLink.style.pointerEvents = 'auto';
+                    adminLoginLink.style.opacity = '1';
+                }, 30000);
+                
+                // Disable link after one click for the session
+                adminLoginLink.style.pointerEvents = 'none';
+                adminLoginLink.style.opacity = '0.5';
+            });
             
-            if (password === 'admin123') {
-                sessionStorage.setItem('isAdminLoggedIn', 'true');
+            closeLoginModal.addEventListener('click', () => {
                 clearTimeout(loginTimer);
                 clearInterval(countdown);
                 loginModal.classList.add('hidden');
-                showAdminPanel();
-            } else {
-                errorEl.textContent = 'Incorrect password.';
-                setTimeout(() => errorEl.textContent = '', 2000);
-            }
-            loginForm.reset();
-        });
+                 // Re-enable link if closed manually
+                adminLoginLink.style.pointerEvents = 'auto';
+                adminLoginLink.style.opacity = '1';
+            });
 
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('isAdminLoggedIn');
-            window.location.reload();
-        });
-        
-        function populateAdminPanel() {
-            // Hero
-            document.getElementById('admin-hero-title').value = websiteData.hero.title;
-            document.getElementById('admin-hero-subtitle').value = websiteData.hero.subtitle;
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const password = document.getElementById('admin-password').value;
+                const errorEl = document.getElementById('login-error');
+                
+                if (!websiteData || !websiteData.password) {
+                    errorEl.textContent = 'Data not loaded. Please try again.';
+                    return;
+                }
+                
+                if (password === websiteData.password) {
+                    sessionStorage.setItem('isAdminLoggedIn', 'true');
+                    clearTimeout(loginTimer);
+                    clearInterval(countdown);
+                    loginModal.classList.add('hidden');
+                    showAdminPanel();
+                } else {
+                    errorEl.textContent = 'Incorrect password.';
+                    setTimeout(() => errorEl.textContent = '', 2000);
+                }
+                loginForm.reset();
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('isAdminLoggedIn');
+                window.location.reload();
+            });
             
-            // Features
-            const featuresAdminList = document.getElementById('admin-features-list');
-            featuresAdminList.innerHTML = `
-                <div class="form-group">
-                    <h5>Main Card</h5>
-                    <label>Title</label>
-                    <input type="text" data-field="main-title" value="${websiteData.features.main.title}">
-                    <label>Text</label>
-                    <textarea rows="2" data-field="main-text">${websiteData.features.main.text}</textarea>
-                </div>
-                ${websiteData.features.sub.map((card, index) => `
-                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
-                        <h5>Sub-Card ${index + 1}</h5>
-                        <label>Title</label>
-                        <input type="text" data-index="${index}" data-field="sub-title" value="${card.title}">
-                        <label>Text</label>
-                        <input type="text" data-index="${index}" data-field="sub-text" value="${card.text}">
-                    </div>
-                `).join('')}`;
+            function populateAdminPanel() {
+                // Hero
+                document.getElementById('admin-hero-title').value = websiteData.hero.title;
+                document.getElementById('admin-hero-subtitle').value = websiteData.hero.subtitle;
+                
+                // About
+                document.getElementById('admin-about-image').value = websiteData.about.image;
+                document.getElementById('admin-about-title').value = websiteData.about.title;
+                document.getElementById('admin-about-p1').value = websiteData.about.p1;
+                document.getElementById('admin-about-p2').value = websiteData.about.p2;
+
+                // Services
+                const servicesAdminList = document.getElementById('admin-services-list');
+                servicesAdminList.innerHTML = '';
+                websiteData.services.forEach((service, index) => {
+                    servicesAdminList.innerHTML += `
+                        <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
+                            <h5>Service ${index + 1}</h5>
+                            <label>Image URL</label>
+                            <input type="text" data-index="${index}" data-field="image" value="${service.image}">
+                            <label>Title</label>
+                            <input type="text" data-index="${index}" data-field="title" value="${service.title}">
+                            <label>Description</label>
+                            <textarea rows="2" data-index="${index}" data-field="description">${service.description}</textarea>
+                        </div>`;
+                });
+                
+                // Projects
+                populateAdminProjects();
+                
+                 // Videos
+                const videosAdminList = document.getElementById('admin-videos-list');
+                videosAdminList.innerHTML = '';
+                websiteData.videos.forEach((video, index) => {
+                    videosAdminList.innerHTML += `
+                        <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
+                            <h5>Video ${index + 1}</h5>
+                            <label>Poster Image URL</label>
+                            <input type="text" data-index="${index}" data-field="poster" value="${video.poster}">
+                            <label>Video Source URL</label>
+                            <input type="text" data-index="${index}" data-field="src" value="${video.src}">
+                        </div>`;
+                });
+
+                // Contact
+                const contactAdminList = document.getElementById('admin-contact-list');
+                contactAdminList.innerHTML = `
+                    <div class="form-group">
+                        <label>Phone 1</label>
+                        <input type="text" data-field="phone1" value="${websiteData.contact.phone1}">
+                        <label>Phone 2</label>
+                        <input type="text" data-field="phone2" value="${websiteData.contact.phone2}">
+                        <label>Email</label>
+                        <input type="email" data-field="email" value="${websiteData.contact.email}">
+                        <label>Address</label>
+                        <input type="text" data-field="address" value="${websiteData.contact.address}">
+                    </div>`;
+                
+                // Reviews
+                populateAdminReviews();
+            }
+
+            async function populateAdminReviews() {
+                const reviewsAdminList = document.getElementById('admin-reviews-list');
+                const q = query(reviewsCollectionRef);
+                const querySnapshot = await getDocs(q);
+                
+                reviewsAdminList.innerHTML = '<ul>';
+                querySnapshot.forEach(doc => {
+                    const review = {id: doc.id, ...doc.data()};
+                    reviewsAdminList.innerHTML += `
+                        <li style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span><strong>${review.name}</strong> (${review.rating} stars): "${review.comment}"</span>
+                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.7rem;" onclick="deleteReview('${review.id}')">Delete</button>
+                        </li>`;
+                });
+                reviewsAdminList.innerHTML += '</ul>';
+            }
             
-            // Sites
-            const sitesAdminList = document.getElementById('admin-sites-list');
-            sitesAdminList.innerHTML = '';
-            websiteData.sites.forEach((site, index) => {
-                 sitesAdminList.innerHTML += `
-                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
-                        <h5>Site ${index + 1}</h5>
+            function populateAdminProjects() {
+                const projectsAdminList = document.getElementById('admin-projects-list');
+                projectsAdminList.innerHTML = '';
+                websiteData.projects.forEach((project, index) => {
+                    projectsAdminList.innerHTML += `
+                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px; position: relative;">
+                        <h5>Project ${index + 1}</h5>
                         <label>Image URL</label>
-                        <input type="text" data-index="${index}" data-field="image" value="${site.image}">
+                        <input type="text" data-index="${index}" data-field="image" value="${project.image}">
                         <label>Title</label>
-                        <input type="text" data-index="${index}" data-field="title" value="${site.title}">
+                        <input type="text" data-index="${index}" data-field="title" value="${project.title}">
+                        <label>Category</label>
+                        <input type="text" data-index="${index}" data-field="category" value="${project.category}">
+                        <button class="btn btn-danger" onclick="deleteProject(${index})" style="position: absolute; top: 15px; right: 0; padding: 5px 10px; font-size: 0.7rem;">Delete</button>
                     </div>`;
-            });
-
-            // Services
-            const servicesAdminList = document.getElementById('admin-services-list');
-            servicesAdminList.innerHTML = '';
-            websiteData.services.forEach((service, index) => {
-                servicesAdminList.innerHTML += `
-                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
-                        <h5>Service ${index + 1}</h5>
-                        <label>Image URL</label>
-                        <input type="text" data-index="${index}" data-field="image" value="${service.image}">
-                        <label>Title</label>
-                        <input type="text" data-index="${index}" data-field="title" value="${service.title}">
-                        <label>Description</label>
-                        <textarea rows="2" data-index="${index}" data-field="description">${service.description}</textarea>
-                    </div>`;
-            });
-            
-             // Gallery
-            const galleryAdminList = document.getElementById('admin-gallery-list');
-            galleryAdminList.innerHTML = '';
-            websiteData.gallery.forEach((item, index) => {
-                galleryAdminList.innerHTML += `
-                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
-                        <h5>Gallery Item ${index + 1}</h5>
-                        <label>Image URL</label>
-                        <input type="text" data-index="${index}" data-field="image" value="${item.image}">
-                        <label>Overlay Title</label>
-                        <input type="text" data-index="${index}" data-field="title" value="${item.title}">
-                    </div>`;
-            });
-
-             // Videos
-            const videosAdminList = document.getElementById('admin-videos-list');
-            videosAdminList.innerHTML = '';
-            websiteData.videos.forEach((video, index) => {
-                videosAdminList.innerHTML += `
-                    <div class="form-group" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
-                        <h5>Video ${index + 1}</h5>
-                        <label>Poster Image URL</label>
-                        <input type="text" data-index="${index}" data-field="poster" value="${video.poster}">
-                        <label>Video Source URL</label>
-                        <input type="text" data-index="${index}" data-field="src" value="${video.src}">
-                    </div>`;
-            });
-
-            // Contact
-            const contactAdminList = document.getElementById('admin-contact-list');
-            contactAdminList.innerHTML = `
-                <div class="form-group">
-                    <label>Phone 1</label>
-                    <input type="text" data-field="phone1" value="${websiteData.contact.phone1}">
-                    <label>Phone 2</label>
-                    <input type="text" data-field="phone2" value="${websiteData.contact.phone2}">
-                    <label>Email</label>
-                    <input type="email" data-field="email" value="${websiteData.contact.email}">
-                    <label>Address</label>
-                    <input type="text" data-field="address" value="${websiteData.contact.address}">
-                </div>`;
-            
-            // Reviews
-            const reviewsAdminList = document.getElementById('admin-reviews-list');
-            const allReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-            reviewsAdminList.innerHTML = '<ul>';
-            allReviews.forEach(review => {
-                reviewsAdminList.innerHTML += `
-                    <li style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span><strong>${review.name}</strong> (${review.rating} stars): "${review.comment}"</span>
-                        <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.7rem;" onclick="deleteReview(${review.id})">Delete</button>
-                    </li>`;
-            });
-            reviewsAdminList.innerHTML += '</ul>';
-        }
-        
-        // Save button listeners
-        adminPanel.addEventListener('click', (e) => {
-            if (!e.target.dataset.save) return;
-            
-            const section = e.target.dataset.save;
-            
-            if (section === 'hero') {
-                websiteData.hero.title = document.getElementById('admin-hero-title').value;
-                websiteData.hero.subtitle = document.getElementById('admin-hero-subtitle').value;
-            }
-            
-            if (section === 'services') {
-                document.querySelectorAll('#admin-services-list .form-group').forEach((form, index) => {
-                    websiteData.services[index] = {
-                        image: form.querySelector(`[data-field="image"]`).value,
-                        title: form.querySelector(`[data-field="title"]`).value,
-                        description: form.querySelector(`[data-field="description"]`).value,
-                    };
                 });
             }
+            
+            // --- Password Change Listener ---
+            const changePasswordBtn = document.getElementById('change-password-btn');
+            changePasswordBtn.addEventListener('click', async () => {
+                const currentPasswordInput = document.getElementById('admin-current-password');
+                const newPasswordInput = document.getElementById('admin-new-password');
+                const confirmPasswordInput = document.getElementById('admin-confirm-password');
+                const statusEl = document.getElementById('password-change-status');
 
-             if (section === 'features') {
-                websiteData.features.main.title = document.querySelector('#admin-features-list [data-field="main-title"]').value;
-                websiteData.features.main.text = document.querySelector('#admin-features-list [data-field="main-text"]').value;
-                document.querySelectorAll('#admin-features-list [data-field="sub-title"]').forEach((el, index) => {
-                    websiteData.features.sub[index].title = el.value;
-                    websiteData.features.sub[index].text = document.querySelectorAll('#admin-features-list [data-field="sub-text"]')[index].value;
+                const currentPassword = currentPasswordInput.value;
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (currentPassword !== websiteData.password) {
+                    statusEl.textContent = "Current password is incorrect.";
+                    statusEl.style.color = '#dc3545';
+                    setTimeout(() => statusEl.textContent = '', 3000);
+                    return;
+                }
+
+                if (!newPassword || newPassword !== confirmPassword) {
+                    statusEl.textContent = "New passwords do not match or are empty.";
+                    statusEl.style.color = '#dc3545';
+                    setTimeout(() => statusEl.textContent = '', 3000);
+                    return;
+                }
+
+                let updatedData = JSON.parse(JSON.stringify(websiteData));
+                updatedData.password = newPassword;
+
+                try {
+                    await setDoc(contentDocRef, updatedData);
+                    statusEl.textContent = "Password updated successfully!";
+                    statusEl.style.color = '#28a745';
+                    currentPasswordInput.value = '';
+                    newPasswordInput.value = '';
+                    confirmPasswordInput.value = '';
+                    setTimeout(() => statusEl.textContent = '', 3000);
+                } catch(error) {
+                    console.error("Error saving new password:", error);
+                    statusEl.textContent = "Error saving new password.";
+                    statusEl.style.color = '#dc3545';
+                }
+            });
+
+
+            // --- Save Button Listeners ---
+            adminPanel.addEventListener('click', async (e) => {
+                if (!e.target.dataset.save) return;
+                
+                const section = e.target.dataset.save;
+                let updatedData = JSON.parse(JSON.stringify(websiteData));
+                
+                if (section === 'hero') {
+                    updatedData.hero.title = document.getElementById('admin-hero-title').value;
+                    updatedData.hero.subtitle = document.getElementById('admin-hero-subtitle').value;
+                }
+
+                if (section === 'about') {
+                    updatedData.about.image = document.getElementById('admin-about-image').value;
+                    updatedData.about.title = document.getElementById('admin-about-title').value;
+                    updatedData.about.p1 = document.getElementById('admin-about-p1').value;
+                    updatedData.about.p2 = document.getElementById('admin-about-p2').value;
+                }
+                
+                if (section === 'services') {
+                    document.querySelectorAll('#admin-services-list .form-group').forEach((form, index) => {
+                        updatedData.services[index].image = form.querySelector(`[data-field="image"]`).value;
+                        updatedData.services[index].title = form.querySelector(`[data-field="title"]`).value;
+                        updatedData.services[index].description = form.querySelector(`[data-field="description"]`).value;
+                    });
+                }
+
+                if (section === 'projects') {
+                    const newProjects = [];
+                    document.querySelectorAll('#admin-projects-list .form-group').forEach(form => {
+                        newProjects.push({
+                            image: form.querySelector(`[data-field="image"]`).value,
+                            title: form.querySelector(`[data-field="title"]`).value,
+                            category: form.querySelector(`[data-field="category"]`).value,
+                        });
+                    });
+                    updatedData.projects = newProjects;
+                }
+
+                 if (section === 'videos') {
+                    document.querySelectorAll('#admin-videos-list .form-group').forEach((form, index) => {
+                        updatedData.videos[index] = {
+                            poster: form.querySelector(`[data-field="poster"]`).value,
+                            src: form.querySelector(`[data-field="src"]`).value,
+                        };
+                    });
+                }
+                
+                if(section === 'contact') {
+                    updatedData.contact.phone1 = document.querySelector('#admin-contact-list [data-field="phone1"]').value;
+                    updatedData.contact.phone2 = document.querySelector('#admin-contact-list [data-field="phone2"]').value;
+                    updatedData.contact.email = document.querySelector('#admin-contact-list [data-field="email"]').value;
+                    updatedData.contact.address = document.querySelector('#admin-contact-list [data-field="address"]').value;
+                }
+
+                try {
+                    await setDoc(contentDocRef, updatedData);
+                    alert(`${section.charAt(0).toUpperCase() + section.slice(1)} content saved!`);
+                } catch(error) {
+                    console.error("Error saving content:", error);
+                    alert("There was an error saving the content.");
+                }
+            });
+
+            // --- Add/Delete Project Listeners ---
+            document.getElementById('add-project-btn').addEventListener('click', () => {
+                websiteData.projects.push({
+                    image: "https://placehold.co/600x400/ccc/fff?text=New+Project",
+                    title: "New Project Title",
+                    category: "Project Category"
                 });
-            }
-             if (section === 'sites') {
-                document.querySelectorAll('#admin-sites-list .form-group').forEach((form, index) => {
-                    websiteData.sites[index] = {
-                        image: form.querySelector(`[data-field="image"]`).value,
-                        title: form.querySelector(`[data-field="title"]`).value,
-                    };
-                });
-            }
-             if (section === 'gallery') {
-                document.querySelectorAll('#admin-gallery-list .form-group').forEach((form, index) => {
-                    websiteData.gallery[index] = {
-                        image: form.querySelector(`[data-field="image"]`).value,
-                        title: form.querySelector(`[data-field="title"]`).value,
-                    };
-                });
+                populateAdminProjects();
+            });
+
+            window.deleteProject = function(index) {
+                if (confirm(`Are you sure you want to delete Project ${index + 1}?`)) {
+                    websiteData.projects.splice(index, 1);
+                    populateAdminProjects();
+                }
             }
 
-            if (section === 'videos') {
-                document.querySelectorAll('#admin-videos-list .form-group').forEach((form, index) => {
-                     websiteData.videos[index] = {
-                         poster: form.querySelector(`[data-field="poster"]`).value,
-                         src: form.querySelector(`[data-field="src"]`).value,
-                     };
-                });
+            // --- Make deleteReview global ---
+            window.deleteReview = async function(reviewId) {
+                if (confirm('Are you sure you want to delete this review?')) {
+                    try {
+                        const reviewDocRef = doc(db, 'artifacts', appId, 'public/data/reviews', reviewId);
+                        await deleteDoc(reviewDocRef);
+                    } catch(error) {
+                        console.error("Error deleting review:", error);
+                        alert("There was an error deleting the review.");
+                    }
+                }
             }
 
-            if(section === 'contact') {
-                websiteData.contact.phone1 = document.querySelector('#admin-contact-list [data-field="phone1"]').value;
-                websiteData.contact.phone2 = document.querySelector('#admin-contact-list [data-field="phone2"]').value;
-                websiteData.contact.email = document.querySelector('#admin-contact-list [data-field="email"]').value;
-                websiteData.contact.address = document.querySelector('#admin-contact-list [data-field="address"]').value;
-            }
-
-            localStorage.setItem('websiteContent', JSON.stringify(websiteData));
-            loadContent();
-            alert(`${section.charAt(0).toUpperCase() + section.slice(1)} content saved!`);
         });
-
-        // Make deleteReview global
-        window.deleteReview = function(reviewId) {
-            if (confirm('Are you sure you want to delete this review?')) {
-                let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-                reviews = reviews.filter(r => r.id !== reviewId);
-                localStorage.setItem('reviews', JSON.stringify(reviews));
-                loadReviews();
-                populateAdminPanel(); // Refresh admin list
-            }
-        }
-
-    });
     </script>
 </body>
 </html>
-"
-
-
-
 
